@@ -1,6 +1,9 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
+import { fontSizes } from '../utils/sizes';
+
+
 export const RoundedButton = ({
   style = {},
   textStyle = {},
@@ -26,5 +29,5 @@ const styles = size =>
       borderColor: '#fff',
       borderWidth: 2,
     },
-    text: {color: '#fff', fontSize: size / 3},
+    text: {color: '#fff', fontSize: fontSizes.md},
   });

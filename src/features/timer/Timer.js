@@ -1,19 +1,26 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {colors} from '../../utils/colors/colors';
+import { Countdown } from '../../components/Countdown';
+import {colors} from '../../utils/colors';
+import {fontSizes} from '../../utils/sizes';
 
 export const Timer = ({focusSubject}) => {
-  // const [] useState(null);
+  const [minutes, setMinutes] = useState(0.1);
 
   return (
-    <SafeAreaView>
-      <View>
+ 
+      <View style={styles.container}>
+        <View style={styles.countdown}>
+          <Countdown />
+        </View>
+        <View>
+        
         <Text style={styles.title}>Focusing on:</Text>
         <Text style={styles.task}>{focusSubject}</Text>
+        
+        </View>
       </View>
-    </SafeAreaView>
   );
 };
 
@@ -23,11 +30,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.white,
-    testAlign: 'center',
+    textAlign: 'center',
+    fontSize: fontSizes.xl,
   },
   task: {
     color: colors.white,
-    testAlign: 'center',
+    textAlign: 'center',
     fontWeight: 'bold',
   },
+  countdown:{
+    flex:1,
+    alignItems:'center',
+    justifyContent: 'center',
+  }
 });
