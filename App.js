@@ -18,7 +18,7 @@ export default function App() {
         ) : (
           <Focus addSubject={setFocusSubject} />
         )}
-        <Text>{focusSubject}</Text>
+       
       </View>
     // </SafeAreaView>
   );

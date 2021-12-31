@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import { fontSizes } from '../utils/sizes';
+import { colors } from '../utils/colors';
 
 
 export const RoundedButton = ({
@@ -22,12 +23,16 @@ export const RoundedButton = ({
 const styles = size =>
   StyleSheet.create({
     radius: {
+      //flex:0.4, //nice flating button
       borderRadius: size / 2,
       width: size,
       height: size,
       alignItems: 'center',
-      borderColor: '#fff',
+      justifyContent: "center", //this take content to the vCenter
+      borderColor: colors.white,
       borderWidth: 2,
     },
-    text: {color: '#fff', fontSize: fontSizes.md},
+    text: {color: colors.white, fontSize: fontSizes.xl,
+      
+    },
   });
