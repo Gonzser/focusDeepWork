@@ -12,7 +12,11 @@ export default function App() {
 
   return (
     // <SafeAreaView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+
+      </View>
+      <View style={styles.body}>
         {focusSubject ? (
           <Timer focusSubject={focusSubject}/>
         ) : (
@@ -20,6 +24,12 @@ export default function App() {
         )}
        
       </View>
+      <View style={styles.footer}>
+
+      </View>
+    </View>
+    
+      
     // </SafeAreaView>
   );
 }
@@ -27,7 +37,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 40,
+    
     backgroundColor: '#A4b63E',
+  },
+  header: {
+    flex: 35,
+    
+    backgroundColor: '#A4b60E',
+  },
+  body: {
+    flex: 910,
+    
+    backgroundColor: '#A4b03E',
+  },
+  footer: {
+    flex: 55,
+    
+    backgroundColor: '#A0b63E',
   },
 });

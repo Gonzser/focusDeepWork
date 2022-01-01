@@ -1,37 +1,36 @@
-import React, { useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import React from 'react';
+import { View, StyleSheet} from 'react-native';
 
 import { RoundedButton } from '../../components/RoundedButton';
-import { fontSizes } from '../../utils/sizes';
 
-export const Timing = ({changeTime})=>{
+export const Timing = ({onChangeTime})=>{
     return(
-        <View style={styles.timingButton} >
+        <View style={styles.timingButtons} >
             <RoundedButton 
                 title='10' 
-                size={75}
-                onPress={changeTime(10)}
+                size={65}
+                onPress={()=>onChangeTime(10)}
             />
             <RoundedButton 
                 title='15' 
-                size={75}
-                onPress={changeTime(15)}
+                size={65}
+                onPress={()=>onChangeTime(15)}
             />
             <RoundedButton 
                 title='20' 
-                size={75}
-                onPress={changeTime(20)}
+                size={65}
+                onPress={()=>onChangeTime(20)}
             />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    timingButton:{
+    timingButtons:{
         // flex:1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        // alignItems: 'center',
         // paddingVertical: fontSizes.xl,
     }
 });
