@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View, 
+  Text, 
+  StyleSheet,
+  Vibration,
+  Platform
+} from 'react-native';
 import {ProgressBar} from 'react-native-paper';
 import KeepAwake from 'react-native-keep-awake';
 
@@ -9,8 +15,11 @@ import {colors} from '../../utils/colors';
 import {fontSizes, spacing} from '../../utils/sizes';
 import { Timing } from './Timing';
 
-export const Timer = ({focusSubject}) => {
-  const [minutes, setMinutes] = useState(0.2);
+const DEFAULT_TIME = 0.2;
+const VIBATION_INTERVAL = 1000;
+
+export const Timer = ({focusSubject, onTimerEnd}) => {
+  const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
 
@@ -20,11 +29,20 @@ export const Timer = ({focusSubject}) => {
     setProgress(p/100);
     // console.log(isStarted);
     // console.log(isPaused);
+    toKeepAwake(); //to correct with useRef()
   };
 
   // const onPause = ()=>{
   //   setPauseCounter(pauseCounter +1);
   // };
+
+  const onEnd = () => {
+    setProgress(1);
+    setIsStarted(false);
+    setMinutes(DEFAULT_TIME);
+    vibrate();
+    onTimerEnd();
+  }
 
   const changeTime=(min)=>{
     setProgress(1);
@@ -33,8 +51,25 @@ export const Timer = ({focusSubject}) => {
     // console.log(minutes);
   }
 
-  KeepAwake.activate();
+  const toKeepAwake = () => isStarted ? KeepAwake.activate() : KeepAwake.deactivate();
 
+  const vibrate =()=>{
+    if(Platform.OS === 'ios'){
+      //check specific iPhones
+      const interval = setInterval(() => {
+        Vibration.vibrate()
+      }, VIBATION_INTERVAL);
+      setTimeout(() => {
+        clearInterval(interval)
+      }, 10000);
+    } if (Platform.OS === 'android') {
+      //check specific for Android
+      Vibration.vibrate(VIBATION_INTERVAL);
+    } else {
+      //what ever
+      console.log('unknown OS');
+    }
+  }
 
   return (
  
@@ -44,6 +79,7 @@ export const Timer = ({focusSubject}) => {
             minutes={minutes}
             isPaused={!isStarted} 
             onProgress={updateProgress}
+            onEnd={onEnd}
           />
         </View>
         <View style={styles.focusing}>

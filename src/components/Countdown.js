@@ -12,6 +12,7 @@ export const Countdown = ({
     minutes = 20,
     isPaused,
     onProgress = () => { },
+    onEnd
 }) => {
     const [millis, setMillis] = useState(minutesToMillis(minutes))
     const interval = React.useRef(null);
@@ -23,6 +24,8 @@ export const Countdown = ({
             console.log(isPaused);
             if (time === 0) {
                 // do some stuff time run out
+                clearInterval(interval.current);
+                onEnd();
 
                 return time;
             }

@@ -16,6 +16,19 @@ const maxWindowActual = window.height;
 export default function App() {
   const [focusSubject, setFocusSubject] = useState('Finish this App today');
 
+  const onTimerEnd = ()=>{
+    setInterval(() => {
+      setFocusSubject(null)
+    }, 5000);
+    // setFocusSubject(null);
+    console.log(focusSubject);
+  }
+
+  const addSubject = (newSubject)=>{
+    setFocusSubject(newSubject);
+    console.log(focusSubject);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -25,9 +38,9 @@ export default function App() {
           </View>
           <View style={styles.body}>
             {focusSubject ? (
-              <Timer focusSubject={focusSubject} />
+              <Timer focusSubject={focusSubject} onTimerEnd={onTimerEnd}/>
             ) : (
-              <Focus addSubject={setFocusSubject} />
+              <Focus addSubject={addSubject} />
             )}
 
           </View>
