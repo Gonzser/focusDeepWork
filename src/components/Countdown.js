@@ -1,74 +1,75 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 
-import { colors }  from '../utils/colors';
+import { colors } from '../utils/colors';
 import { fontSizes, spacing } from '../utils/sizes';
 
-const minutesToMillis = (min) => min *60*1000;
-const formatTime = (time) => (time<10?`0${time}`:time);
-const isHours = (time)=>(time>1?`${time}:`:null);
+const minutesToMillis = (min) => min * 60 * 1000;
+const formatTime = (time) => (time < 10 ? `0${time}` : time);
+const isHours = (time) => (time > 1 ? `${time}:` : null);
 
 export const Countdown = ({
-    minutes=20,
-    isStarted,
-    onProgress=()=>{},
-})=>{
+    minutes = 20,
+    isPaused,
+    onProgress = () => { },
+}) => {
     const [millis, setMillis] = useState(minutesToMillis(minutes))
     const interval = React.useRef(null);
 
-    const countDown = ()=>
-        setMillis((time)=>{
+    const countDown = () =>
+        setMillis((time) => {
             console.log(time);
             console.log(minutes);
-            console.log(isStarted);
-            if(time===0){
+            console.log(isPaused);
+            if (time === 0) {
                 // do some stuff time run out
 
                 return time;
             }
             const timeLeft = time - 1000;
             //report the progress
-            onProgress((timeLeft/minutesToMillis(minutes))*100);
+            onProgress((timeLeft / minutesToMillis(minutes)) * 100);
             return timeLeft;
         })
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         setMillis(minutesToMillis(minutes));
         // onProgress(1);
-    },[minutes])
+    }, [minutes])
 
     // useEffect(()=>{console.log(millis);},[millis])
 
+    // useEffect(() => {
+    //     interval.current = setInterval(countDown, 1000);
+    //     return () => clearInterval(interval.current);
+    // }, [isStarted]);
+
     useEffect(()=>{
+        if(isPaused){
+            return;
+        }
+
         interval.current = setInterval(countDown, 1000);
-        return ()=> clearInterval(interval.current);
-    }, [isStarted]);
+        return () => clearInterval(interval.current);
+    }, [isPaused])
 
-    // useEffect(()=>{
-    //     if(isPaused){
-    //         return;
-    //     }
 
-    //     return()=>clearInterval(interval.current);
-    // }, [isPaused])
 
-    
+    const hours = Math.floor(millis / 1000 / 60 / 60);
+    const minute = Math.floor(millis / 1000 / 60) % 60; //%60 only useful in the case to use hours
+    const seconds = Math.floor(millis / 1000) % 60;
 
-    const hours = Math.floor(millis/1000/60/60);
-    const minute = Math.floor(millis/1000/60) %60; //%60 only useful in the case to use hours
-    const seconds = Math.floor(millis/1000) %60;
-
-    return(
-            <Text style={styles.text}>
-                {isHours(hours)}{formatTime(minute)}:{formatTime(seconds)}
-            </Text>
+    return (
+        <Text style={styles.text}>
+            {isHours(hours)}{formatTime(minute)}:{formatTime(seconds)}
+        </Text>
     );
 }
 
 const styles = StyleSheet.create({
-    text:{
+    text: {
         fontSize: fontSizes.xxxl,
-        textAlign:'center',
+        textAlign: 'center',
         fontWeight: 'bold',
         color: colors.white,
         padding: spacing.md,

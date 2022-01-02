@@ -1,58 +1,116 @@
 import React from 'react';
-import {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-// import {SafeAreaView} from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar, Dimensions } from 'react-native';
 
-import {Focus} from './src/features/focus/Focus';
-import {Timer} from './src/features/timer/Timer';
+import { Focus } from './src/features/focus/Focus';
+import { Timer } from './src/features/timer/Timer';
+
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
+
+// console.log(window.height);
+// console.log('window.height');
+const maxWindowActual = window.height;
 
 
 export default function App() {
   const [focusSubject, setFocusSubject] = useState('Finish this App today');
 
   return (
-    // <SafeAreaView>
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={dStyles(maxWindowActual).pushScroll}>
+          <View style={styles.header}>
 
-      </View>
-      <View style={styles.body}>
-        {focusSubject ? (
-          <Timer focusSubject={focusSubject}/>
-        ) : (
-          <Focus addSubject={setFocusSubject} />
-        )}
-       
-      </View>
-      <View style={styles.footer}>
+          </View>
+          <View style={styles.body}>
+            {focusSubject ? (
+              <Timer focusSubject={focusSubject} />
+            ) : (
+              <Focus addSubject={setFocusSubject} />
+            )}
 
-      </View>
-    </View>
-    
-      
-    // </SafeAreaView>
+          </View>
+          <View style={styles.footer}>
+
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const dStyles = maxHi => StyleSheet.create({
+  pushScroll:{
+    height:maxHi*0.98,
+  }
+})
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    // paddingTop: StatusBar.currentHeight,
     backgroundColor: '#A4b63E',
+  },
+  pushScroll: {
+    height:700,
+    // reemplazado por dStyles
   },
   header: {
     flex: 35,
-    
+
     backgroundColor: '#A4b60E',
   },
   body: {
     flex: 910,
-    
+
     backgroundColor: '#A4b03E',
   },
   footer: {
     flex: 55,
-    
+
     backgroundColor: '#A0b63E',
   },
 });
+
+// <View style={styles.container}>
+//   <View style={styles.header}>
+
+//   </View>
+//   <View style={styles.body}>
+//     {focusSubject ? (
+//       <Timer focusSubject={focusSubject} />
+//     ) : (
+//       <Focus addSubject={setFocusSubject} />
+//     )}
+
+//   </View>
+//   <View style={styles.footer}>
+
+//   </View>
+// </View>
+
+// <SafeAreaView>
+// <ScrollView contentInsetAdjustmentBehavior="automatic">
+//   <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+//   <View>
+//     {focusSubject ? ( 
+//       <Timer focusSubject={focusSubject} />
+//     ) : (
+//       <Focus addSubject={setFocusSubject} />
+//     )}
+//   </View>
+// </ScrollView>
+// </SafeAreaView>
+
+// <SafeAreaView>
+//       <ScrollView> 
+//         <View>
+//           {focusSubject ? ( 
+//             <Timer focusSubject={focusSubject} />
+//           ) : (
+//             <Focus addSubject={setFocusSubject} />
+//           )}
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>

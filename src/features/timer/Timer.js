@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {ProgressBar} from 'react-native-paper';
+import KeepAwake from 'react-native-keep-awake';
 
 import { Countdown } from '../../components/Countdown';
 import {RoundedButton} from '../../components/RoundedButton'
@@ -32,6 +33,8 @@ export const Timer = ({focusSubject}) => {
     // console.log(minutes);
   }
 
+  KeepAwake.activate();
+
 
   return (
  
@@ -39,7 +42,7 @@ export const Timer = ({focusSubject}) => {
         <View style={styles.countdown}>
           <Countdown 
             minutes={minutes}
-            isStarted={isStarted} 
+            isPaused={!isStarted} 
             onProgress={updateProgress}
           />
         </View>
