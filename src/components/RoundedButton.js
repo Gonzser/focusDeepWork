@@ -1,9 +1,8 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-import { fontSizes } from '../utils/sizes';
-import { colors } from '../utils/colors';
-
+import {fontSizes} from '../utils/sizes';
+import {colors} from '../utils/colors';
 
 export const RoundedButton = ({
   style = {},
@@ -28,11 +27,9 @@ const styles = size =>
       width: size,
       height: size,
       alignItems: 'center',
-      justifyContent: "center", //this take content to the vCenter
+      justifyContent: 'center', //this take content to the vCenter
       borderColor: colors.white,
       borderWidth: 2,
     },
-    text: {color: colors.white, fontSize: fontSizes.xl,
-      
-    },
+    text: {color: colors.white, fontSize: fontSizes.xl},
   });

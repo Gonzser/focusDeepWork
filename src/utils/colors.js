@@ -1,4 +1,3 @@
 export const colors = {
-    white: '#fff',
+  white: '#fff',
 };
-
