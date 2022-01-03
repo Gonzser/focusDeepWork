@@ -11,7 +11,7 @@ const isHours = time => (time > 1 ? `${time}:` : null);
 export const Countdown = ({
   minutes = 20,
   isPaused,
-  onProgress = () => {},
+  setProgress,
   onEnd,
 }) => {
   const [millis, setMillis] = useState(minutesToMillis(minutes));
@@ -19,9 +19,9 @@ export const Countdown = ({
 
   const countDown = () =>
     setMillis(time => {
-      console.log(time);
-      console.log(minutes);
-      console.log(isPaused);
+      // console.log(time);
+      // console.log(minutes);
+      // console.log(isPaused);
       if (time === 0) {
         // do some stuff time run out
         clearInterval(interval.current);
@@ -31,7 +31,7 @@ export const Countdown = ({
       }
       const timeLeft = time - 1000;
       //report the progress
-      onProgress((timeLeft / minutesToMillis(minutes)) * 100);
+      setProgress((timeLeft / minutesToMillis(minutes)));
       return timeLeft;
     });
 

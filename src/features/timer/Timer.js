@@ -8,6 +8,7 @@ import {RoundedButton} from '../../components/RoundedButton';
 import {colors} from '../../utils/colors';
 import {fontSizes, spacing} from '../../utils/sizes';
 import {Timing} from './Timing';
+import { useEffect } from 'react/cjs/react.development';
 
 const DEFAULT_TIME = 0.2;
 const VIBATION_INTERVAL = 1000;
@@ -18,12 +19,20 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
   const [progress, setProgress] = useState(1);
 
   //functions
-  const updateProgress = p => {
-    setProgress(p / 100);
-    // console.log(isStarted);
-    // console.log(isPaused);
-    toKeepAwake(); //to correct with useRef()
-  };
+  useEffect(()=>{
+    
+    toKeepAwake();
+  },[])
+
+
+  // const updateProgress = p => {
+  //   setProgress(p / 100);
+  //   console.log(p);
+  //   console.log('this came hook onProgress');
+  //   // console.log(isStarted);
+  //   // console.log(isPaused);
+  //   toKeepAwake(); //to correct with useRef()
+  // };
 
   // const onPause = ()=>{
   //   setPauseCounter(pauseCounter +1);
@@ -34,10 +43,10 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
     setIsStarted(false);
     setMinutes(DEFAULT_TIME);
     vibrate();
-    onTimerEnd();
+    setTimeout(()=>{onTimerEnd();},5000) 
   };
 
-  const changeTime = min => () => {
+  const changeTime = min  => {
     setProgress(1);
     setIsStarted(false);
     setMinutes(min);
@@ -62,7 +71,7 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
       Vibration.vibrate(VIBATION_INTERVAL);
     } else {
       //what ever
-      console.log('unknown OS');
+      // console.log('unknown OS');
     }
   };
 
@@ -72,7 +81,7 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
         <Countdown
           minutes={minutes}
           isPaused={!isStarted}
-          onProgress={updateProgress}
+          setProgress={setProgress}
           onEnd={onEnd}
         />
       </View>

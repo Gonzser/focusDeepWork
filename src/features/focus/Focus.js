@@ -1,11 +1,23 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RoundedButton} from '../../components/RoundedButton';
 import {fontSizes, spacing} from '../../utils/sizes';
 
 export const Focus = ({addSubject}) => {
   const [tempItem, setTempItem] = useState(null);
+
+  const itemInputHandler = enteredText =>{
+    console.log(enteredText);
+    setTempItem(enteredText);
+  };
+
+  const addItemHandler = ()=>{
+    console.log('Action at addItemHandler');
+    console.log(tempItem);
+    // setFocusSubject(tempItem);
+    addSubject(tempItem);
+  }
 
   return (
     <View style={styles.container}>
@@ -14,17 +26,15 @@ export const Focus = ({addSubject}) => {
         <View style={styles.inputContainer}>
           <TextInput
             style={{flex: 1, marginRight: spacing.lg}}
-            placehodler="Deep Work on ..."
-            onSubmitEditing={({nativeEvent}) => {
-              setTempItem(nativeEvent.text);
-            }}
+            placeholder="Deep Work on ..."
+            onChangeText={itemInputHandler}
+            value={tempItem}
+            onSubmitEditing={addItemHandler}
           />
           <RoundedButton
             size={50}
             title="+"
-            onPress={() => {
-              addSubject(tempItem);
-            }}
+            onPress={addItemHandler}
           />
         </View>
       </View>

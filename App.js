@@ -24,17 +24,18 @@ export default function App() {
   const [focusSubject, setFocusSubject] = useState('Finish this App today');
 
   const onTimerEnd = () => {
-    setInterval(() => {
-      setFocusSubject(null);
-    }, 5000);
-    // setFocusSubject(null);
-    console.log(focusSubject);
+    // setInterval(() => {
+    //   setFocusSubject(null);
+    // }, 5000);
+    setFocusSubject(null);
+    // console.log(focusSubject);
   };
 
-  const addSubject = newSubject => {
-    setFocusSubject(newSubject);
-    console.log(focusSubject);
-  };
+  // const addSubject = (newSubject)=>() => {
+  //   console.log(newSubject);
+  //   setFocusSubject(newSubject);
+  //   console.log(focusSubject);
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,9 +44,10 @@ export default function App() {
           <View style={styles.header} />
           <View style={styles.body}>
             {focusSubject ? (
-              <Timer focusSubject={focusSubject} onTimerEnd={onTimerEnd} />
+              <Timer focusSubject={focusSubject} 
+              onTimerEnd={onTimerEnd} />
             ) : (
-              <Focus addSubject={addSubject} />
+              <Focus addSubject={setFocusSubject} />
             )}
           </View>
           <View style={styles.footer} />
