@@ -13,26 +13,24 @@ import { useEffect } from 'react/cjs/react.development';
 const DEFAULT_TIME = 0.2;
 const VIBATION_INTERVAL = 1000;
 
-export const Timer = ({focusSubject, onTimerEnd}) => {
+export const Timer = ({focusSubject, onTimerEnd, clearSubject, doneSubject}) => {
   const [minutes, setMinutes] = useState(DEFAULT_TIME);
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
 
-  //functions
+  // functions
   useEffect(()=>{
-    
     toKeepAwake();
   },[])
 
-
-  // const updateProgress = p => {
-  //   setProgress(p / 100);
-  //   console.log(p);
-  //   console.log('this came hook onProgress');
-  //   // console.log(isStarted);
-  //   // console.log(isPaused);
-  //   toKeepAwake(); //to correct with useRef()
-  // };
+  const updateProgress = (progress) => {
+    setProgress(progress);
+    // console.log(p);
+    // console.log('this came hook onProgress');
+    // console.log(isStarted);
+    // console.log(isPaused);
+    // toKeepAwake(); //to correct with useRef()
+  };
 
   // const onPause = ()=>{
   //   setPauseCounter(pauseCounter +1);
@@ -43,7 +41,8 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
     setIsStarted(false);
     setMinutes(DEFAULT_TIME);
     vibrate();
-    setTimeout(()=>{onTimerEnd();},5000) 
+    // setTimeout(()=>{onTimerEnd();},5000) 
+    onTimerEnd();
   };
 
   const changeTime = min  => {
@@ -81,7 +80,7 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
         <Countdown
           minutes={minutes}
           isPaused={!isStarted}
-          setProgress={setProgress}
+          onProgress={updateProgress}
           onEnd={onEnd}
         />
       </View>
@@ -100,11 +99,17 @@ export const Timer = ({focusSubject, onTimerEnd}) => {
         <Timing onChangeTime={changeTime} />
       </View>
       <View style={styles.buttonControls}>
+        <View>
+          <RoundedButton title="x" size={40} onPress={clearSubject} />
+        </View>
         {isStarted ? (
           <RoundedButton title="pause" onPress={() => setIsStarted(false)} />
         ) : (
           <RoundedButton title="start" onPress={() => setIsStarted(true)} />
         )}
+        <View>
+          <RoundedButton title="^" size={40} onPress={doneSubject} />
+        </View>
       </View>
     </View>
   );
@@ -152,8 +157,9 @@ const styles = StyleSheet.create({
     // backgroundColor:'#ffa',
   },
   buttonControls: {
+    flexDirection: 'row',
     // padding:spacing.md,
-    // justifyContent:'space-evenly',
+    justifyContent:'space-evenly',
     alignItems: 'center',
     // backgroundColor:'#ffa',
   },
